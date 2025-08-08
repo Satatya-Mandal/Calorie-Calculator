@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Calorie App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tab styles */
+        .active-tab {
+            border-bottom: 2px solid #000005;
+            color: #e4e4ea;
+            font-weight: 600;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Background slideshow */
+        .bg-slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .bg-slide.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative">
+
+    <!-- Background Slideshow -->
+    <div class="bg-slideshow">
+        <div class="bg-slide active" style="background-image: url('login.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('food2.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('food3.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('food4.jpg');"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
+    </div>
+
+    <!-- Centered Modal -->
+    <div class="relative z-10 bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-2xl w-full max-w-3xl mx-4">
+        <div class="flex flex-col md:flex-row">
+            
+            <!-- Left: Form -->
+            <div class="w-full md:w-1/2 p-8 text-white">
+                <!-- Tab Switcher -->
+                <div class="flex mb-6 border-b border-white/30">
+                    <button id="loginTab" class="w-1/2 py-2 text-center active-tab">Login</button>
+                    <button id="signupTab" class="w-1/2 py-2 text-center text-gray-300">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm" class="form-section active">
+                    <h2 class="text-2xl font-bold mb-4">Welcome Back</h2>
+                    <form action="#" method="POST" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Email Address</label>
+                            <input type="email" placeholder="you@example.com" class="w-full border border-white/30 bg-white/10 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none placeholder-gray-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Password</label>
+                            <input type="password" placeholder="********" class="w-full border border-white/30 bg-white/10 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none placeholder-gray-300">
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4 text-indigo-500 rounded">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="text-indigo-300 hover:underline">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 transition">Sign In</button>
+                    </form>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div id="signupForm" class="form-section">
+                    <h2 class="text-2xl font-bold mb-4">Create an Account</h2>
+                    <form action="#" method="POST" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Full Name</label>
+                            <input type="text" placeholder="John Doe" class="w-full border border-white/30 bg-white/10 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none placeholder-gray-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Email Address</label>
+                            <input type="email" placeholder="you@example.com" class="w-full border border-white/30 bg-white/10 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none placeholder-gray-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Password</label>
+                            <input type="password" placeholder="********" class="w-full border border-white/30 bg-white/10 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none placeholder-gray-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Confirm Password</label>
+                            <input type="password" placeholder="********" class="w-full border border-white/30 bg-white/10 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none placeholder-gray-300">
+                        </div>
+                        <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right: Side Image -->
+            <div class="hidden md:block md:w-1/2">
+                <img src="login.jpg" alt="Food" class="w-full h-full object-cover rounded-r-2xl">
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        // Tab switch logic
+        const loginTab = document.getElementById("loginTab");
+        const signupTab = document.getElementById("signupTab");
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+
+        loginTab.addEventListener("click", () => {
+            loginTab.classList.add("active-tab");
+            signupTab.classList.remove("active-tab");
+            loginForm.classList.add("active");
+            signupForm.classList.remove("active");
+        });
+
+        signupTab.addEventListener("click", () => {
+            signupTab.classList.add("active-tab");
+            loginTab.classList.remove("active-tab");
+            signupForm.classList.add("active");
+            loginForm.classList.remove("active");
+        });
+
+        // Background slideshow logic
+        const slides = document.querySelectorAll(".bg-slide");
+        let current = 0;
+        setInterval(() => {
+            slides[current].classList.remove("active");
+            current = (current + 1) % slides.length;
+            slides[current].classList.add("active");
+        }, 5000); // Change every 5 seconds
+    </script>
+</body>
+</html>
